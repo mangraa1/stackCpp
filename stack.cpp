@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 struct node {
     float firstCathetus, secondCathetus;
@@ -50,6 +51,35 @@ void deleteStack(node** head){
     }
 }
 
+float perimetr(node *head){
+
+    float perimetr;
+
+    perimetr = head->firstCathetus + head->secondCathetus + sqrtf(pow(head->firstCathetus, 2) + pow(head->secondCathetus, 2));
+
+    head = head->next;
+
+    return perimetr;
+}
+
+void biggestPerimetr(node *head){
+
+    float max = perimetr(head);
+    int first, second;
+
+    while(head){
+
+        if (perimetr(head) >= max){
+            max = perimetr(head);
+            first = head->firstCathetus;
+            second = head->secondCathetus;
+        }
+        head = head->next;
+    }
+
+    std::cout << std::endl << "Biggest perimetr in tringle with legs " << first << " " << second << " has a perimetr " << max << std::endl;
+}
+
 int main(){
 
     node* head;
@@ -60,5 +90,6 @@ int main(){
 
     createSimpleStack(&head, num);
     showStack(head);
+    biggestPerimetr(head);
     deleteStack(&head);
 }
